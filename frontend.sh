@@ -1,4 +1,4 @@
-echo -e "\e[36m>>>>>>>>>>>>>>>>>> Installing nginx WebServer<<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
+echo -e "\e[36m>>>>>>>>>>>>>>>>>> Installing nginx WebServer <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 yum install nginx -y
 
 echo -e "\e[36m>>>>>>>>>>>>>>>>>> Enabling nginx Service <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
