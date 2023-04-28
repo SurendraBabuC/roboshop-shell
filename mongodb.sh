@@ -1,3 +1,6 @@
+script_path=$(dirname $0)
+source ${script_path}/common.sh
+
 echo -e "\e[36m>>>>>>>>>>>>>>>>>> Copying the mongo repo <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 

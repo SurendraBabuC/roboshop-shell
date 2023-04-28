@@ -1,3 +1,6 @@
+script_path=$(dirname $0)
+source ${script_path}/common.sh
+
 echo -e "\e[36m>>>>>>>>>>>>>>>>>> Installing nginx WebServer <<<<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 yum install nginx -y
 
@@ -8,7 +11,7 @@ echo -e "\e[36m>>>>>>>>>>>>>>>>>> Restarting nginx Service <<<<<<<<<<<<<<<<<<<<<
 systemctl restart nginx
 
 echo -e "\e[36m>>>>>>>>>>>>>>>>>> Copy nginx Reverse Proxy Conf file <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-cp /home/centos/roboshop-shell/roboshop.conf /etc/nginx/default.d/roboshop.conf
+cp ${script_path}/roboshop.conf /etc/nginx/default.d/roboshop.conf
 
 echo -e "\e[36m>>>>>>>>>>>>>>>>>> Removing default content from nginx server <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 rm -rf /usr/share/nginx/html/*
