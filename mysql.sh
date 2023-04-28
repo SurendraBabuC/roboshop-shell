@@ -2,6 +2,11 @@ script=$(realpath "$0")
 script_path=$(dirname "$script")
 source ${script_path}/common.sh
 
+if [ -z "$mysql_root_password"]; then
+  echo "Input Mysql Root Password misssing"
+  exit
+fi
+
 echo -e "\e[36m>>>>>>>>>>>>>>>>>> Disable mysql 8 Version <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
 dnf module disable mysql -y
 
