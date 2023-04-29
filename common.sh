@@ -2,9 +2,11 @@ app_user=roboshop
 script=$(realpath "$0")
 script_path=$(dirname "$script")
 log_file=/tmp/roboshop.log
+# rm -f $log_file
 
 func_print_head() {
   echo -e "\e[36m>>>>>>>>>>>>>>>>>> $1 <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
+  echo -e "\e[36m>>>>>>>>>>>>>>>>>> $1 <<<<<<<<<<<<<<<<<<<<<<<<\e[0m" &>>${log_file}
 }
 
 func_stat_check() {
@@ -45,7 +47,10 @@ func_schema_setup() {
 
 func_app_prereq() {
   func_print_head "Add Application User "
-  useradd ${app_user} &>>${log_file}
+  id ${app_user} &>>${log_file}
+  if [ $? -ne 0 ]; then
+    useradd ${app_user} &>>${log_file}
+  fi
   func_stat_check $?
 
   func_print_head "Create Application Directory"
