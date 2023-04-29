@@ -8,19 +8,24 @@ if [ -z "$rabbitmq_appuser_password"]; then
   exit
 fi
 
-echo -e "\e[36m>>>>>>>>>>>>>>>>>> Setup Erlang Repos <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash
+func_print_head "Setup Erlang Repos"
+curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[36m>>>>>>>>>>>>>>>>>> Setup RabbitMQ Repos <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash
+func_print_head "Setup RabbitMQ Repos"
+curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[36m>>>>>>>>>>>>>>>>>> Install Erlang & RabbitMQ <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-yum install erlang rabbitmq-server -y
+func_print_head "Install Erlang & RabbitMQ"
+yum install erlang rabbitmq-server -y &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[36m>>>>>>>>>>>>>>>>>> Start RabbitMQ Service <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-systemctl enable rabbitmq-server
-systemctl restart rabbitmq-server
+func_print_head "Start RabbitMQ Service"
+systemctl enable rabbitmq-server &>>${log_file}
+systemctl restart rabbitmq-server &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[36m>>>>>>>>>>>>>>>>>> Add Application in RabbitMQ <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-rabbitmqctl add_user roboshop ${rabbitmq_appuser_password}
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+func_print_head "Add Application in RabbitMQ"
+rabbitmqctl add_user roboshop ${rabbitmq_appuser_password} &>>${log_file}
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>${log_file}
+func_stat_check $?

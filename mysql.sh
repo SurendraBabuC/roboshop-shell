@@ -1,24 +1,29 @@
 script=$(realpath "$0")
 script_path=$(dirname "$script")
-source ${script_path}/common.sh
+source ${ script_path }/common.sh
 
-if [ -z "$mysql_root_password"]; then
-  echo "Input Mysql Root Password misssing"
+if [ -z "$mysql_root_password" ]; then
+  echo "Input Mysql Root Password Missing"
   exit
 fi
 
-echo -e "\e[36m>>>>>>>>>>>>>>>>>> Disable mysql 8 Version <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-dnf module disable mysql -y
+func_print_head "Disable mysql 8 Version"
+dnf module disable mysql -y &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[36m>>>>>>>>>>>>>>>>>> Copy mysql repo file <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-cp ${script_path}/mysql.repo /etc/yum.repos.d/mysql.repo
+func_print_head "Copy mysql repo file"
+cp ${script_path}/mysql.repo /etc/yum.repos.d/mysql.repo &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[36m>>>>>>>>>>>>>>>>>> Install mysql <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-yum install mysql-community-server -y
+func_print_head "Install mysql"
+yum install mysql-community-server -y &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[36m>>>>>>>>>>>>>>>>>> Start mysql service <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-systemctl enable mysqld
-systemctl start mysqld
+func_print_head "Start mysql service"
+systemctl enable mysqld &>>${log_file}
+systemctl start mysqld &>>${log_file}
+func_stat_check $?
 
-echo -e "\e[36m>>>>>>>>>>>>>>>>>> Reset mysql password <<<<<<<<<<<<<<<<<<<<<<<<\e[0m"
-mysql_secure_installation --set-root-pass RoboShop@1
+func_print_head "Reset mysql password"
+mysql_secure_installation --set-root-pass RoboShop@1 &>>${log_file}
+func_stat_check $?
