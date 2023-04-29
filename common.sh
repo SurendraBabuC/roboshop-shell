@@ -41,7 +41,7 @@ func_schema_setup() {
 
     func_print_head "Load Schema"
     mysql -h mysql-dev.surendrababuc01.online -uroot -p{$mysql_root_password} </app/schema/shipping.sql &>>${log_file}
-    func_stat_check $?
+
   fi
 }
 
