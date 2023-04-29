@@ -30,7 +30,7 @@ func_schema_setup() {
     func_stat_check $?
 
     func_print_head "Load schema"
-    mongo --host mongodb-dev.surendrababuc01.online </app/schema/user.js &>>${log_file}
+    mongo --host mongodb-dev.surendrababuc01.online </app/schema/${component}.js &>>${log_file}
     func_stat_check $?
   fi
   if [ "$schema_setup" == "mysql" ]; then
