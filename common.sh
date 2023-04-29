@@ -59,24 +59,24 @@ func_app_prereq() {
   func_stat_check $?
 
   func_print_head "Download Application Content"
-  curl -L -o /tmp/${componenet}.zip https://roboshop-artifacts.s3.amazonaws.com/${componenet}.zip &>>${log_file}
+  curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log_file}
   func_stat_check $?
 
   func_print_head "Unzip Application Content"
   cd /app &>>${log_file}
-  unzip /tmp/${componenet}.zip &>>${log_file}
+  unzip /tmp/${component}.zip &>>${log_file}
   func_stat_check $?
 }
 
 func_systemd_setup() {
   func_print_head "Setup Systemd Service"
-  cp ${script_path}/${componenet}.service /etc/systemd/system/${componenet}.service &>>${log_file}
+  cp ${script_path}/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
   func_stat_check $?
 
-  func_print_head "Start ${componenet} Service"
+  func_print_head "Start ${component} Service"
   systemctl daemon-reload &>>${log_file}
-  systemctl enable ${componenet} &>>${log_file}
-  systemctl restart ${componenet} &>>${log_file}
+  systemctl enable ${component} &>>${log_file}
+  systemctl restart ${component} &>>${log_file}
   func_stat_check $?
 }
 
