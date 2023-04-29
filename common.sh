@@ -80,7 +80,7 @@ func_systemd_setup() {
   func_stat_check $?
 }
 
-func_nodeJs() {
+func_nodejs() {
   func_print_head "Configuring NodeJS repos"
   curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
   func_stat_check $?
